@@ -1,0 +1,13 @@
+--- setup_opencv.sh	2021-11-22 12:37:03.917678515 +0000
++++ setup_opencv.sh.1	2021-11-22 12:37:24.977779541 +0000
+@@ -39,8 +39,8 @@
+   then
+     echo "Installing OpenCV from source"
+     if [[ -x "$(command -v apt)" ]]; then
+-      sudo apt update && sudo apt install build-essential git
+-      sudo apt install cmake ffmpeg libavformat-dev libdc1394-22-dev libgtk2.0-dev \
++      apt update && apt install -y build-essential git
++      apt install -y cmake ffmpeg libavformat-dev libdc1394-22-dev libgtk2.0-dev \
+                        libjpeg-dev libpng-dev libswscale-dev libtbb2 libtbb-dev \
+                        libtiff-dev
+     elif [[ -x "$(command -v dnf)" ]]; then
