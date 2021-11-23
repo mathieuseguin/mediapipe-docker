@@ -42,4 +42,4 @@ RUN python3 -m venv mp_env \
     && pip3 install pip setuptools --upgrade \
     && pip3 install --upgrade pip wheel \
     && python3 setup.py gen_protos \
-    && python3 setup.py bdist_wheel
+    && python3 setup.py install
