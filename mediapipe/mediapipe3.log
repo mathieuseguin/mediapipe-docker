@@ -1,293 +1,46 @@
-Sending build context to Docker daemon  815.1kB
-Step 1/13 : FROM ubuntu:latest
+Sending build context to Docker daemon  1.171MB
+Step 1/14 : FROM ubuntu:latest
  ---> ba6acccedd29
-Step 2/13 : ARG DEBIAN_FRONTEND=noninteractive
+Step 2/14 : ARG DEBIAN_FRONTEND=noninteractive
  ---> Using cache
  ---> b8c98749ba0e
-Step 3/13 : RUN apt update     && apt install -y       cmake       git       protobuf-compiler       python3-dev       python3-pip       python3.8-venv       sudo       unzip       vim       wget
+Step 3/14 : RUN apt update     && apt install -y       cmake       git       protobuf-compiler       python3-dev       python3-pip       python3.8-venv       sudo       unzip       vim       wget
  ---> Using cache
  ---> 693d58648798
-Step 4/13 : ENV BAZEL_VERSION=3.7.2
+Step 4/14 : ENV BAZEL_VERSION=3.7.2
  ---> Using cache
  ---> 05c57858d985
-Step 5/13 : RUN mkdir ./bazel     && wget --no-check-certificate -O ./bazel/installer.sh "https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"     && wget --no-check-certificate -O  ./bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE"     && chmod +x ./bazel/installer.sh     && ./bazel/installer.sh     && rm -f ./bazel/installer.sh
+Step 5/14 : RUN mkdir ./bazel     && wget --no-check-certificate -O ./bazel/installer.sh "https://github.com/bazelbuild/bazel/releases/download/${BAZEL_VERSION}/bazel-${BAZEL_VERSION}-installer-linux-x86_64.sh"     && wget --no-check-certificate -O  ./bazel/LICENSE.txt "https://raw.githubusercontent.com/bazelbuild/bazel/master/LICENSE"     && chmod +x ./bazel/installer.sh     && ./bazel/installer.sh     && rm -f ./bazel/installer.sh
  ---> Using cache
  ---> c520b1bc750e
-Step 6/13 : WORKDIR /usr/local/src
+Step 6/14 : WORKDIR /usr/local/src
  ---> Using cache
  ---> ad279321e04d
-Step 7/13 : RUN git clone https://github.com/google/mediapipe.git
+Step 7/14 : RUN git clone https://github.com/google/mediapipe.git
  ---> Using cache
  ---> 3898d0db9df3
-Step 8/13 : WORKDIR /usr/local/src/mediapipe
+Step 8/14 : WORKDIR /usr/local/src/mediapipe
  ---> Using cache
  ---> 76cbce4387df
-Step 9/13 : RUN apt install -y         libopencv-core-dev         libopencv-highgui-dev         libopencv-calib3d-dev         libopencv-features2d-dev         libopencv-imgproc-dev libopencv-video-dev
+Step 9/14 : RUN apt install -y         libopencv-core-dev         libopencv-highgui-dev         libopencv-calib3d-dev         libopencv-features2d-dev         libopencv-imgproc-dev libopencv-video-dev
  ---> Using cache
  ---> 339174384090
-Step 10/13 : COPY ./setup_opencv.patch /tmp/setup_opencv.patch
+Step 10/14 : COPY ./setup_opencv.patch /tmp/setup_opencv.patch
  ---> Using cache
  ---> 8da7390d4deb
-Step 11/13 : RUN patch setup_opencv.sh /tmp/setup_opencv.patch
+Step 11/14 : RUN patch setup_opencv.sh /tmp/setup_opencv.patch
  ---> Using cache
  ---> 895d0bd40f00
-Step 12/13 : RUN bash setup_opencv.sh
+Step 12/14 : RUN bash setup_opencv.sh
  ---> Using cache
  ---> b0a18e29db2b
-Step 13/13 : RUN python3 -m venv mp_env     && . mp_env/bin/activate     && pip3 install -r requirements.txt     && pip3 install pip setuptools --upgrade     && pip3 install --upgrade pip wheel     && python3 setup.py gen_protos     && python3 setup.py install
- ---> Running in d9323c589960
-Collecting absl-py
-  Downloading absl_py-1.0.0-py3-none-any.whl (126 kB)
-Collecting attrs>=19.1.0
-  Downloading attrs-21.2.0-py2.py3-none-any.whl (53 kB)
-Collecting matplotlib
-  Downloading matplotlib-3.5.0-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (11.3 MB)
-Collecting numpy
-  Downloading numpy-1.21.4-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl (15.7 MB)
-Collecting opencv-contrib-python
-  Downloading opencv_contrib_python-4.5.4.60-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (66.5 MB)
-Collecting protobuf>=3.11.4
-  Downloading protobuf-3.19.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (1.1 MB)
-Collecting six
-  Downloading six-1.16.0-py2.py3-none-any.whl (11 kB)
-Collecting wheel
-  Downloading wheel-0.37.0-py2.py3-none-any.whl (35 kB)
-Collecting python-dateutil>=2.7
-  Downloading python_dateutil-2.8.2-py2.py3-none-any.whl (247 kB)
-Collecting pillow>=6.2.0
-  Downloading Pillow-8.4.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.1 MB)
-Collecting setuptools-scm>=4
-  Downloading setuptools_scm-6.3.2-py3-none-any.whl (33 kB)
-Collecting fonttools>=4.22.0
-  Downloading fonttools-4.28.2-py3-none-any.whl (880 kB)
-Collecting kiwisolver>=1.0.1
-  Downloading kiwisolver-1.3.2-cp38-cp38-manylinux_2_5_x86_64.manylinux1_x86_64.whl (1.2 MB)
-Collecting cycler>=0.10
-  Downloading cycler-0.11.0-py3-none-any.whl (6.4 kB)
-Collecting pyparsing>=2.2.1
-  Downloading pyparsing-3.0.6-py3-none-any.whl (97 kB)
-Collecting packaging>=20.0
-  Downloading packaging-21.3-py3-none-any.whl (40 kB)
-Collecting tomli>=1.0.0
-  Downloading tomli-1.2.2-py3-none-any.whl (12 kB)
-Requirement already satisfied: setuptools in ./mp_env/lib/python3.8/site-packages (from setuptools-scm>=4->matplotlib->-r requirements.txt (line 3)) (44.0.0)
-Installing collected packages: six, absl-py, attrs, numpy, python-dateutil, pillow, tomli, pyparsing, packaging, setuptools-scm, fonttools, kiwisolver, cycler, matplotlib, opencv-contrib-python, protobuf, wheel
-Successfully installed absl-py-1.0.0 attrs-21.2.0 cycler-0.11.0 fonttools-4.28.2 kiwisolver-1.3.2 matplotlib-3.5.0 numpy-1.21.4 opencv-contrib-python-4.5.4.60 packaging-21.3 pillow-8.4.0 protobuf-3.19.1 pyparsing-3.0.6 python-dateutil-2.8.2 setuptools-scm-6.3.2 six-1.16.0 tomli-1.2.2 wheel-0.37.0
-Collecting pip
-  Downloading pip-21.3.1-py3-none-any.whl (1.7 MB)
-Collecting setuptools
-  Downloading setuptools-59.2.0-py3-none-any.whl (952 kB)
-Installing collected packages: pip, setuptools
-  Attempting uninstall: pip
-    Found existing installation: pip 20.0.2
-    Uninstalling pip-20.0.2:
-      Successfully uninstalled pip-20.0.2
-  Attempting uninstall: setuptools
-    Found existing installation: setuptools 44.0.0
-    Uninstalling setuptools-44.0.0:
-      Successfully uninstalled setuptools-44.0.0
-Successfully installed pip-21.3.1 setuptools-59.2.0
-Requirement already satisfied: pip in ./mp_env/lib/python3.8/site-packages (21.3.1)
-Requirement already satisfied: wheel in ./mp_env/lib/python3.8/site-packages (0.37.0)
-running gen_protos
-[91madding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/__init__.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/modules/__init__.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/modules/holistic_landmark/__init__.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/modules/objectron/__init__.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/__init__.py
-generating proto file: mediapipe/framework/calculator_profile_pb2.py
-generating proto file: mediapipe/framework/status_handler_pb2.py
-generating proto file: mediapipe/framework/thread_pool_executor_pb2.py
-generating proto file: mediapipe/framework/packet_generator_pb2.py
-generating proto file: mediapipe/framework/calculator_options_pb2.py
-generating proto file: mediapipe/framework/stream_handler_pb2.py
-generating proto file: mediapipe/framework/calculator_pb2.py
-generating proto file: mediapipe/framework/packet_factory_pb2.py
-generating proto file: mediapipe/framework/test_calculators_pb2.py
-generating proto file: mediapipe/framework/mediapipe_options_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/stream_handler/__init__.py
-generating proto file: mediapipe/framework/stream_handler/timestamp_align_input_stream_handler_pb2.py
-generating proto file: mediapipe/framework/stream_handler/fixed_size_input_stream_handler_pb2.py
-generating proto file: mediapipe/framework/stream_handler/sync_set_input_stream_handler_pb2.py
-generating proto file: mediapipe/framework/stream_handler/default_input_stream_handler_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/tool/__init__.py
-generating proto file: mediapipe/framework/tool/source_pb2.py
-generating proto file: mediapipe/framework/tool/switch_container_pb2.py
-generating proto file: mediapipe/framework/tool/calculator_graph_template_pb2.py
-generating proto file: mediapipe/framework/tool/packet_generator_wrapper_calculator_pb2.py
-generating proto file: mediapipe/framework/tool/node_chain_subgraph_pb2.py
-generating proto file: mediapipe/framework/tool/field_data_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/deps/__init__.py
-generating proto file: mediapipe/framework/deps/proto_descriptor_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/formats/__init__.py
-generating proto file: mediapipe/framework/formats/detection_pb2.py
-generating proto file: mediapipe/framework/formats/matrix_data_pb2.py
-generating proto file: mediapipe/framework/formats/image_file_properties_pb2.py
-generating proto file: mediapipe/framework/formats/body_rig_pb2.py
-generating proto file: mediapipe/framework/formats/rect_pb2.py
-generating proto file: mediapipe/framework/formats/classification_pb2.py
-generating proto file: mediapipe/framework/formats/landmark_pb2.py
-generating proto file: mediapipe/framework/formats/affine_transform_data_pb2.py
-generating proto file: mediapipe/framework/formats/image_format_pb2.py
-generating proto file: mediapipe/framework/formats/time_series_header_pb2.py
-generating proto file: mediapipe/framework/formats/location_data_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/formats/motion/__init__.py
-generating proto file: mediapipe/framework/formats/motion/optical_flow_field_data_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/formats/object_detection/__init__.py
-generating proto file: mediapipe/framework/formats/object_detection/anchor_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/framework/formats/annotation/__init__.py
-generating proto file: mediapipe/framework/formats/annotation/rasterization_pb2.py
-generating proto file: mediapipe/framework/formats/annotation/locus_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/util/__init__.py
-generating proto file: mediapipe/calculators/util/association_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/visibility_copy_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/annotation_overlay_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/top_k_scores_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/landmarks_to_detection_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/labels_to_render_data_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/rect_to_render_data_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/packet_frequency_pb2.py
-generating proto file: mediapipe/calculators/util/landmarks_to_floats_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/detections_to_rects_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/packet_frequency_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/local_file_contents_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/latency_pb2.py
-generating proto file: mediapipe/calculators/util/filter_detections_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/visibility_smoothing_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/packet_latency_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/detections_to_render_data_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/non_max_suppression_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/landmark_projection_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/landmarks_to_render_data_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/rect_transformation_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/timed_box_list_to_render_data_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/logic_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/timed_box_list_id_to_label_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/refine_landmarks_from_heatmap_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/detection_label_id_to_text_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/landmarks_smoothing_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/rect_to_render_scale_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/thresholding_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/landmarks_refinement_calculator_pb2.py
-generating proto file: mediapipe/calculators/util/collection_has_min_size_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/internal/__init__.py
-generating proto file: mediapipe/calculators/internal/callback_packet_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/image/__init__.py
-generating proto file: mediapipe/calculators/image/image_transformation_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/segmentation_smoothing_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/warp_affine_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/bilateral_filter_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/set_alpha_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/opencv_encoded_image_to_image_frame_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/image_clone_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/opencv_image_encoder_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/mask_overlay_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/scale_image_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/feature_detector_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/image_cropping_calculator_pb2.py
-generating proto file: mediapipe/calculators/image/recolor_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/video/__init__.py
-generating proto file: mediapipe/calculators/video/video_pre_stream_calculator_pb2.py
-generating proto file: mediapipe/calculators/video/tracked_detection_manager_calculator_pb2.py
-[0m[91mgenerating proto file: mediapipe/calculators/video/opencv_video_encoder_calculator_pb2.py
-generating proto file: mediapipe/calculators/video/flow_to_image_calculator_pb2.py
-generating proto file: mediapipe/calculators/video/box_detector_calculator_pb2.py
-generating proto file: mediapipe/calculators/video/motion_analysis_calculator_pb2.py
-generating proto file: mediapipe/calculators/video/flow_packager_calculator_pb2.py
-generating proto file: mediapipe/calculators/video/box_tracker_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/video/tool/__init__.py
-generating proto file: mediapipe/calculators/video/tool/flow_quantizer_model_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/tflite/__init__.py
-generating proto file: mediapipe/calculators/tflite/tflite_inference_calculator_pb2.py
-generating proto file: mediapipe/calculators/tflite/tflite_tensors_to_landmarks_calculator_pb2.py
-generating proto file: mediapipe/calculators/tflite/tflite_tensors_to_segmentation_calculator_pb2.py
-generating proto file: mediapipe/calculators/tflite/ssd_anchors_calculator_pb2.py
-generating proto file: mediapipe/calculators/tflite/tflite_converter_calculator_pb2.py
-generating proto file: mediapipe/calculators/tflite/tflite_tensors_to_classification_calculator_pb2.py
-generating proto file: mediapipe/calculators/tflite/tflite_tensors_to_detections_calculator_pb2.py
-generating proto file: mediapipe/calculators/tflite/tflite_custom_op_resolver_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/core/__init__.py
-generating proto file: mediapipe/calculators/core/dequantize_byte_array_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/packet_resampler_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/sequence_shift_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/graph_profile_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/quantize_float_vector_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/concatenate_vector_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/packet_thinner_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/flow_limiter_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/packet_cloner_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/constant_side_packet_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/split_vector_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/clip_vector_size_calculator_pb2.py
-generating proto file: mediapipe/calculators/core/gate_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/tensor/__init__.py
-generating proto file: mediapipe/calculators/tensor/tensor_converter_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/landmarks_to_tensor_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/tensors_to_floats_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/tensors_to_segmentation_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/tensors_to_landmarks_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/tensors_to_detections_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/tensors_to_classification_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/image_to_tensor_calculator_pb2.py
-generating proto file: mediapipe/calculators/tensor/inference_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/calculators/audio/__init__.py
-generating proto file: mediapipe/calculators/audio/rational_factor_resample_calculator_pb2.py
-generating proto file: mediapipe/calculators/audio/mfcc_mel_calculators_pb2.py
-generating proto file: mediapipe/calculators/audio/spectrogram_calculator_pb2.py
-generating proto file: mediapipe/calculators/audio/time_series_framer_calculator_pb2.py
-generating proto file: mediapipe/calculators/audio/stabilized_log_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/gpu/__init__.py
-generating proto file: mediapipe/gpu/gpu_origin_pb2.py
-generating proto file: mediapipe/gpu/gl_scaler_calculator_pb2.py
-generating proto file: mediapipe/gpu/copy_calculator_pb2.py
-generating proto file: mediapipe/gpu/gl_context_options_pb2.py
-generating proto file: mediapipe/gpu/gl_surface_sink_calculator_pb2.py
-generating proto file: mediapipe/gpu/scale_mode_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/modules/face_geometry/__init__.py
-generating proto file: mediapipe/modules/face_geometry/effect_renderer_calculator_pb2.py
-generating proto file: mediapipe/modules/face_geometry/env_generator_calculator_pb2.py
-generating proto file: mediapipe/modules/face_geometry/geometry_pipeline_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/modules/face_geometry/protos/__init__.py
-generating proto file: mediapipe/modules/face_geometry/protos/geometry_pipeline_metadata_pb2.py
-generating proto file: mediapipe/modules/face_geometry/protos/face_geometry_pb2.py
-generating proto file: mediapipe/modules/face_geometry/protos/mesh_3d_pb2.py
-generating proto file: mediapipe/modules/face_geometry/protos/environment_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/modules/holistic_landmark/calculators/__init__.py
-generating proto file: mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/modules/objectron/calculators/__init__.py
-generating proto file: mediapipe/modules/objectron/calculators/frame_annotation_tracker_calculator_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/a_r_capture_metadata_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/frame_annotation_to_rect_calculator_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/tflite_tensors_to_objects_calculator_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/filter_detection_calculator_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/belief_decoder_config_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/tensors_to_objects_calculator_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/annotation_data_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/object_pb2.py
-generating proto file: mediapipe/modules/objectron/calculators/camera_parameters_pb2.py
-generating proto file: mediapipe/util/audio_decoder_pb2.py
-generating proto file: mediapipe/util/render_data_pb2.py
-generating proto file: mediapipe/util/color_pb2.py
-adding __init__ file: /usr/local/src/mediapipe/mediapipe/util/tracking/__init__.py
-generating proto file: mediapipe/util/tracking/tracked_detection_manager_config_pb2.py
-generating proto file: mediapipe/util/tracking/box_tracker_pb2.py
-generating proto file: mediapipe/util/tracking/region_flow_computation_pb2.py
-generating proto file: mediapipe/util/tracking/motion_analysis_pb2.py
-generating proto file: mediapipe/util/tracking/region_flow_pb2.py
-generating proto file: mediapipe/util/tracking/motion_estimation_pb2.py
-generating proto file: mediapipe/util/tracking/motion_models_pb2.py
-generating proto file: mediapipe/util/tracking/frame_selection_solution_evaluator_pb2.py
-generating proto file: mediapipe/util/tracking/tracking_pb2.py
-generating proto file: mediapipe/util/tracking/tone_models_pb2.py
-generating proto file: mediapipe/util/tracking/motion_saliency_pb2.py
-generating proto file: mediapipe/util/tracking/frame_selection_pb2.py
-generating proto file: mediapipe/util/tracking/tone_estimation_pb2.py
-generating proto file: mediapipe/util/tracking/flow_packager_pb2.py
-generating proto file: mediapipe/util/tracking/push_pull_filtering_pb2.py
-generating proto file: mediapipe/util/tracking/box_detector_pb2.py
-generating proto file: mediapipe/util/tracking/camera_motion_pb2.py
-[0mrunning install
+Step 13/14 : RUN python3 -m venv mp_env     && . mp_env/bin/activate     && pip3 install -r requirements.txt     && pip3 install pip setuptools --upgrade     && pip3 install --upgrade pip wheel     && pip3 install numpy     && python3 setup.py gen_protos
+ ---> Using cache
+ ---> b33672584dc0
+Step 14/14 : RUN . mp_env/bin/activate && python3 setup.py bdist_wheel
+ ---> Running in d63ff59cc2cf
+running bdist_wheel
+running build
 running build_binary_graphs
 [91mExtracting Bazel installation...
 [0m[91mStarting local Bazel server and connecting to it...
@@ -308,9 +61,9 @@ Repository rule http_archive defined at:
 [0m[91mLoading: 0 packages loaded
 [0m[91mLoading: 0 packages loaded
 [0m[91mLoading: 0 packages loaded
+[0m[91mLoading: 0 packages loaded
 [0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-[0m[91mLoading: 0 packages loaded
 [0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_absl' because it already exists.
@@ -322,7 +75,7 @@ DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/
 Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_apple_support' because it already exists.
@@ -337,73 +90,74 @@ Warning: skipping import of repository 'pybind11' because it already exists.
   /usr/local/src/mediapipe/WORKSPACE:36:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-[0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (40 packages loaded, 163 targets configured)
-[0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (108 packages loaded, 3056 targets configured)
+[0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (47 packages loaded, 217 targets configured)
+[0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (109 packages loaded, 3729 targets configured)
 [0m[91mWARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (114 packages loaded, 6418 targets configured)
-[0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (114 packages loaded, 6418 targets configured)
 [0m[91mINFO: SHA256 (https://github.com/opencv/opencv/archive/3.4.10.tar.gz) = 1ed6f5b02a7baf14daca04817566e7c98ec668cec381e0edf534fa49f10f58a2
+[0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (114 packages loaded, 6418 targets configured)
 [0m[91mDEBUG: Rule 'opencv' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "1ed6f5b02a7baf14daca04817566e7c98ec668cec381e0edf534fa49f10f58a2"
 [0m[91mDEBUG: Repository opencv instantiated at:
   /usr/local/src/mediapipe/WORKSPACE:181:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-[0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_short_range_cpu (117 packages loaded, 12692 targets configured)
 [0m[91mINFO: Analyzed target //mediapipe/modules/face_detection:face_detection_short_range_cpu (118 packages loaded, 19118 targets configured).
+[0m[91m
 [0m[91mINFO: Found 1 target...
-[0m[91m[0 / 5] [Prepa] BazelWorkspaceStatusAction stable-status.txt
-[0m[91m[128 / 3,460] Compiling com_google_absl/absl/time/internal/cctz/src/time_zone_info.cc [for host]; 4s processwrapper-sandbox ... (125 actions, 8 running)
-[0m[91m[147 / 3,467] [Runni] Compiling flatbuffers/src/idl_gen_kotlin.cpp [for host]; 9s ... (128 actions, 8 running)
-[0m[91m[152 / 3,467] [Sched] Compiling flatbuffers/src/idl_gen_java.cpp [for host]; 15s ... (128 actions, 8 running)
-[0m[91m[167 / 3,467] [Sched] Compiling zlib/infback.c [for host]; 22s ... (127 actions, 8 running)
-[0m[91m[206 / 3,467] [Sched] Compiling com_google_absl/absl/strings/str_cat.cc [for host]; 30s ... (128 actions, 7 running)
-[0m[91m[248 / 3,467] [Sched] Compiling com_google_absl/absl/status/status.cc [for host]; 37s ... (128 actions, 9 running)
-[0m[91m[283 / 3,467] [Sched] Compiling com_google_protobuf/src/google/protobuf/any.cc [for host]; 29s ... (128 actions, 9 running)
-[0m[91m[312 / 3,467] [Sched] Compiling com_google_protobuf/src/google/protobuf/empty.pb.cc [for host]; 34s ... (128 actions, 8 running)
-[0m[91m[338 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/map_field.cc [for host]; 45s ... (128 actions, 8 running)
-[0m[91m[369 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/compiler/objectivec/objectivec_enum.cc [for host]; 54s ... (128 actions, 8 running)
-[0m[91m[399 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 70s processwrapper-sandbox ... (128 actions, 8 running)
-[0m[91m[442 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 91s processwrapper-sandbox ... (128 actions, 8 running)
+[0m[91m[0 / 17] [Prepa] BazelWorkspaceStatusAction stable-status.txt
+[0m[91m[158 / 3,484] Compiling com_github_gflags_gflags/src/gflags.cc; 4s processwrapper-sandbox ... (128 actions, 9 running)
+[0m[91m[188 / 3,484] [Sched] Compiling com_google_absl/absl/strings/internal/charconv_parse.cc [for host]; 9s ... (128 actions, 8 running)
+[0m[91m[215 / 3,483] [Sched] Compiling flatbuffers/src/flatc_main.cpp [for host]; 15s ... (128 actions, 8 running)
+[0m[91m[224 / 3,483] [Sched] Compiling flatbuffers/src/idl_gen_dart.cpp [for host]; 21s ... (128 actions, 8 running)
+[0m[91m[231 / 3,483] [Sched] Compiling flatbuffers/src/idl_gen_grpc.cpp [for host]; 30s ... (128 actions, 9 running)
+[0m[91m[252 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/extension_set.cc [for host]; 39s ... (128 actions, 9 running)
+[0m[91m[277 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/util/time_util.cc [for host]; 47s ... (128 actions, 9 running)
+[0m[91m[304 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/descriptor_database.cc [for host]; 55s ... (128 actions, 9 running)
+[0m[91m[329 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/util/internal/datapiece.cc [for host]; 63s ... (128 actions, 9 running)
+[0m[91m[376 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/compiler/java/java_string_field_lite.cc [for host]; 53s ... (128 actions, 9 running)
+[0m[91m[410 / 3,483] [Sched] Compiling com_google_protobuf/src/google/protobuf/compiler/java/java_name_resolver.cc [for host]; 55s ... (128 actions, 9 running)
+[0m[91m[536 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 46s processwrapper-sandbox ... (127 actions, 8 running)
+[0m[91m[692 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 71s processwrapper-sandbox ... (127 actions, 8 running)
 [0m[91mINFO: From ProtoCompile mediapipe/framework/tool/calculator_graph_template.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/non_max_suppression_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator_profile.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/ssd_anchors_calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/inference_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/image_to_tensor_calculator.pb.h [for host]:
-bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/calculator_graph_template.pb.h [for host]:
-bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/internal/callback_packet_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/field_data.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator_profile.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_detections_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_detections_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/non_max_suppression_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/ssd_anchors_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/inference_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/image_to_tensor_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/internal/callback_packet_calculator.pb.h:
 [0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/framework/tool/field_data.pb.h:
 [0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/inference_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/image_to_tensor_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_detections_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/internal/callback_packet_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator_profile.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/non_max_suppression_calculator.pb.h:
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/ssd_anchors_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/field_data.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator_profile.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/internal/callback_packet_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/ssd_anchors_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/non_max_suppression_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_detections_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/calculator_graph_template.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/framework/calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/image_to_tensor_calculator.pb.h:
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/inference_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From Compiling mediapipe/framework/calculator.pb.cc [for host]:
 [0m[91mbazel-out/host/bin/mediapipe/framework/calculator.pb.cc: In member function 'virtual google::protobuf::uint8* mediapipe::ProfilerConfig::_InternalSerialize(google::protobuf::uint8*, google::protobuf::io::EpsCopyOutputStream*) const':
 bazel-out/host/bin/mediapipe/framework/calculator.pb.cc:1734:41: warning: 'bool mediapipe::ProfilerConfig::enable_input_output_latency() const' is deprecated [-Wdeprecated-declarations]
@@ -474,24 +228,23 @@ In file included from bazel-out/host/bin/mediapipe/framework/calculator.pb.cc:4:
 bazel-out/host/bin/mediapipe/framework/calculator.pb.h:3959:13: note: declared here
  3959 | inline bool CalculatorGraphConfig_Node::has_profiler_config() const {
       |             ^~~~~~~~~~~~~~~~~~~~~~~~~~
-[0m[91m[922 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 116s processwrapper-sandbox ... (128 actions, 9 running)
-[0m[91m[1,293 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 145s processwrapper-sandbox ... (128 actions, 9 running)
-[0m[91m[1,463 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 177s processwrapper-sandbox ... (128 actions, 7 running)
-[0m[91m[1,570 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 215s processwrapper-sandbox ... (128 actions, 9 running)
-[0m[91m[1,755 / 3,488] CcCmakeMakeRule third_party/opencv_cmake/include; 258s processwrapper-sandbox ... (128 actions, 8 running)
-[0m[91m[2,241 / 3,488] CcCmakeMakeRule third_party/opencv_cmake/include; 308s processwrapper-sandbox ... (128 actions, 7 running)
-[0m[91m[2,556 / 3,490] CcCmakeMakeRule third_party/opencv_cmake/include; 365s processwrapper-sandbox ... (128 actions, 9 running)
-[0m[91m[3,011 / 3,491] CcCmakeMakeRule third_party/opencv_cmake/include; 431s processwrapper-sandbox ... (128 actions, 9 running)
-[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 521s processwrapper-sandbox
-[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 611s processwrapper-sandbox
-[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 722s processwrapper-sandbox
-[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 841s processwrapper-sandbox
-[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 1031s processwrapper-sandbox
+[0m[91m[866 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 99s processwrapper-sandbox ... (128 actions, 9 running)
+[0m[91m[1,025 / 3,483] CcCmakeMakeRule third_party/opencv_cmake/include; 133s processwrapper-sandbox ... (128 actions, 9 running)
+[0m[91m[1,251 / 3,484] CcCmakeMakeRule third_party/opencv_cmake/include; 171s processwrapper-sandbox ... (128 actions, 7 running)
+[0m[91m[1,648 / 3,484] CcCmakeMakeRule third_party/opencv_cmake/include; 214s processwrapper-sandbox ... (128 actions, 7 running)
+[0m[91m[2,153 / 3,484] CcCmakeMakeRule third_party/opencv_cmake/include; 264s processwrapper-sandbox ... (128 actions, 7 running)
+[0m[91m[2,523 / 3,492] CcCmakeMakeRule third_party/opencv_cmake/include; 322s processwrapper-sandbox ... (128 actions, 8 running)
+[0m[91m[3,006 / 3,492] CcCmakeMakeRule third_party/opencv_cmake/include; 388s processwrapper-sandbox ... (128 actions, 9 running)
+[0m[91m[3,478 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 467s processwrapper-sandbox ... (2 actions running)
+[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 556s processwrapper-sandbox
+[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 691s processwrapper-sandbox
+[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 871s processwrapper-sandbox
+[0m[91m[3,479 / 3,493] CcCmakeMakeRule third_party/opencv_cmake/include; 1028s processwrapper-sandbox
 [0m[91mTarget //mediapipe/modules/face_detection:face_detection_short_range_cpu up-to-date:
 [0m[91m  bazel-bin/mediapipe/modules/face_detection/libface_detection_short_range_cpu.lo
   bazel-bin/mediapipe/modules/face_detection/libface_detection_short_range_cpu.pic.lo
   bazel-bin/mediapipe/modules/face_detection/libface_detection_short_range_cpu.so
-[0m[91mINFO: Elapsed time: 1228.603s, Critical Path: 1190.90s
+[0m[91mINFO: Elapsed time: 1248.126s, Critical Path: 1178.17s
 INFO: 3493 processes: 125 internal, 3368 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 3493 total actions
 [0m[91mINFO: Build completed successfully, 3493 total actions
@@ -503,25 +256,25 @@ INFO: 3493 processes: 125 internal, 3368 processwrapper-sandbox.
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+WARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_absl' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_protobuf' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_googletest' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_apple_support' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'bazel_skylib' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'pybind11' because it already exists.
 [0m[91mAnalyzing: target //mediapipe/modules/face_detection:face_detection_full_range_cpu (0 packages loaded, 0 targets configured)
 [0m[91mDEBUG: Rule 'rules_cc' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "3839996049629e6377abdfd04681ddeeb0cc3db13b9d2ff81bf46700cb4529f7"
@@ -539,12 +292,12 @@ Repository rule http_archive defined at:
 [0m[91mINFO: Found 1 target...
 [0m[91m[0 / 1] [Prepa] BazelWorkspaceStatusAction stable-status.txt
 [0m[91m[18 / 24] Compiling mediapipe/modules/face_detection/face_detection_full_range_common_linked.cc; 1s processwrapper-sandbox ... (3 actions running)
-[0m[91m[20 / 24] Compiling mediapipe/modules/face_detection/face_detection_full_range_cpu_linked.cc; 4s processwrapper-sandbox ... (2 actions, 1 running)
+[0m[91m[20 / 24] Compiling mediapipe/modules/face_detection/face_detection_full_range_cpu_linked.cc; 4s processwrapper-sandbox ... (3 actions, 1 running)
 [0m[91mTarget //mediapipe/modules/face_detection:face_detection_full_range_cpu up-to-date:
 [0m[91m  bazel-bin/mediapipe/modules/face_detection/libface_detection_full_range_cpu.lo
   bazel-bin/mediapipe/modules/face_detection/libface_detection_full_range_cpu.pic.lo
-[0m[91m  bazel-bin/mediapipe/modules/face_detection/libface_detection_full_range_cpu.so
-[0m[91mINFO: Elapsed time: 5.143s, Critical Path: 4.48s
+  bazel-bin/mediapipe/modules/face_detection/libface_detection_full_range_cpu.so
+[0m[91mINFO: Elapsed time: 5.213s, Critical Path: 4.56s
 [0m[91mINFO: 24 processes: 12 internal, 12 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 24 total actions
 [0m[91mINFO: Build completed successfully, 24 total actions
@@ -555,24 +308,24 @@ Repository rule http_archive defined at:
   /usr/local/src/mediapipe/WORKSPACE:42:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+WARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_absl' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
-Warning: skipping import of repository 'com_google_protobuf' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+Warning: skipping import of repository 'com_google_protobuf' because it already exists.
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_googletest' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_apple_support' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'bazel_skylib' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'pybind11' because it already exists.
@@ -587,102 +340,102 @@ Repository rule http_archive defined at:
   /usr/local/src/mediapipe/WORKSPACE:181:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-[0m[91mWARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+WARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mINFO: Analyzed target //mediapipe/modules/face_landmark:face_landmark_front_cpu (6 packages loaded, 530 targets configured).
 [0m[91mINFO: Found 1 target...
 [0m[91m[0 / 1] [Prepa] BazelWorkspaceStatusAction stable-status.txt
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmark_projection_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/tflite_custom_op_resolver_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/switch_container.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/split_vector_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_floats_calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/tflite_custom_op_resolver_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/gate_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/thresholding_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmark_projection_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/local_file_contents_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/gate_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_floats_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_refinement_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_landmarks_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_landmarks_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/constant_side_packet_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/thresholding_calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/local_file_contents_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/switch_container.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/constant_side_packet_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/association_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_refinement_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/core/clip_vector_size_calculator.pb.h [for host]:
 bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/association_calculator.pb.h [for host]:
+INFO: From ProtoCompile mediapipe/calculators/util/landmark_projection_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/local_file_contents_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/switch_container.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/tflite_custom_op_resolver_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/collection_has_min_size_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+INFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_landmarks_calculator.pb.h [for host]:
 bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/collection_has_min_size_calculator.pb.h:
 bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/collection_has_min_size_calculator.pb.h [for host]:
+INFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_floats_calculator.pb.h [for host]:
 bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_to_detection_calculator.pb.h [for host]:
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/split_vector_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+INFO: From ProtoCompile mediapipe/calculators/util/association_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/gate_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+INFO: From ProtoCompile mediapipe/calculators/util/landmarks_to_detection_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_refinement_calculator.pb.h [for host]:
 [0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_to_detection_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/split_vector_calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/rect_transformation_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/detections_to_rects_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/clip_vector_size_calculator.pb.h:
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/constant_side_packet_calculator.pb.h:
 [0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/rect_transformation_calculator.pb.h [for host]:
 [0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/detections_to_rects_calculator.pb.h [for host]:
+INFO: From ProtoCompile mediapipe/calculators/util/thresholding_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/association_calculator.pb.h [for host]:
 [0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91m[78 / 206] Compiling mediapipe/framework/formats/classification.pb.cc [for host]; 1s processwrapper-sandbox ... (96 actions, 8 running)
-[0m[91m[79 / 206] Compiling mediapipe/framework/formats/classification.pb.cc [for host]; 2s processwrapper-sandbox ... (95 actions, 8 running)
-[0m[91m[86 / 206] [Sched] Compiling mediapipe/calculators/image/image_properties_calculator.cc; 4s ... (88 actions, 8 running)
-[0m[91m[86 / 206] [Sched] Compiling mediapipe/util/tflite/operations/transform_tensor_bilinear.cc; 5s ... (88 actions, 9 running)
-[0m[91m[88 / 206] [Sched] Compiling mediapipe/util/tflite/operations/max_pool_argmax.cc; 6s ... (86 actions, 9 running)
-[0m[91m[90 / 206] [Sched] Compiling mediapipe/util/tflite/operations/transform_landmarks.cc; 8s ... (84 actions, 8 running)
-[0m[91m[92 / 206] [Sched] Compiling mediapipe/calculators/util/landmark_projection_calculator.pb.cc; 9s ... (82 actions, 9 running)
-[0m[91m[95 / 206] [Sched] Compiling mediapipe/calculators/core/gate_calculator.pb.cc [for host]; 11s ... (79 actions, 8 running)
-[0m[91m[96 / 206] [Sched] Compiling mediapipe/util/tflite/op_resolver.cc; 12s ... (78 actions, 8 running)
-[0m[91m[100 / 206] [Sched] Compiling mediapipe/calculators/core/previous_loopback_calculator.cc; 15s ... (74 actions, 8 running)
-[0m[91m[105 / 206] [Sched] Compiling org_tensorflow/tensorflow/lite/delegates/gpu/common/object_reader.cc; 18s ... (69 actions, 9 running)
-[0m[91m[113 / 206] [Sched] Compiling mediapipe/calculators/util/local_file_contents_calculator.cc; 21s ... (61 actions, 9 running)
-[0m[91m[118 / 206] [Sched] Compiling mediapipe/calculators/tensor/tensors_to_landmarks_calculator.pb.cc [for host]; 25s ... (56 actions, 9 running)
-[0m[91m[125 / 206] [Sched] Compiling mediapipe/framework/tool/switch_mux_calculator.cc; 29s ... (49 actions, 9 running)
-[0m[91m[134 / 206] [Sched] Compiling mediapipe/calculators/core/constant_side_packet_calculator.cc; 34s ... (41 actions, 8 running)
-[0m[91m[144 / 206] [Sched] Compiling mediapipe/calculators/util/thresholding_calculator.cc; 40s ... (31 actions, 9 running)
-[0m[91m[157 / 206] [Sched] Compiling mediapipe/calculators/core/split_vector_calculator.cc; 47s ... (21 actions, 9 running)
-[0m[91m[164 / 206] [Sched] Compiling mediapipe/calculators/util/detections_to_rects_calculator.pb.cc [for host]; 55s ... (14 actions, 9 running)
-[0m[91m[193 / 206] Compiling mediapipe/calculators/core/split_vector_calculator.cc; 18s processwrapper-sandbox ... (10 actions, 9 running)
+[0m[91mINFO: From ProtoCompile mediapipe/framework/tool/switch_container.pb.h:
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/rect_transformation_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/constant_side_packet_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/clip_vector_size_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/split_vector_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_to_detection_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_landmarks_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_refinement_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmark_projection_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/core/gate_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tflite/tflite_custom_op_resolver_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/local_file_contents_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/thresholding_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91m[77 / 206] Compiling mediapipe/framework/formats/landmark.pb.cc [for host]; 1s processwrapper-sandbox ... (92 actions, 8 running)
+[0m[91m[78 / 206] Compiling mediapipe/framework/formats/landmark.pb.cc [for host]; 2s processwrapper-sandbox ... (91 actions, 8 running)
+[0m[91m[82 / 206] [Sched] Compiling mediapipe/calculators/util/local_file_contents_calculator.pb.cc [for host]; 4s ... (87 actions, 8 running)
+[0m[91m[82 / 206] [Sched] ProtoCompile mediapipe/calculators/tensor/tensors_to_floats_calculator.pb.h; 5s ... (87 actions, 9 running)
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_floats_calculator.pb.h:
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/detections_to_rects_calculator.pb.h:
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/detections_to_rects_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91m[89 / 206] [Sched] Compiling org_tensorflow/tensorflow/lite/delegates/utils.cc; 6s ... (85 actions, 8 running)
+[0m[91m[91 / 206] [Sched] Compiling org_tensorflow/tensorflow/lite/delegates/gpu/common/model_transformer.cc; 8s ... (83 actions, 9 running)
+[0m[91m[93 / 206] [Sched] Compiling org_tensorflow/tensorflow/lite/delegates/gpu/common/object_reader.cc; 9s ... (81 actions, 9 running)
+[0m[91m[95 / 206] [Sched] Compiling mediapipe/util/tflite/operations/landmarks_to_transform_matrix.cc; 11s ... (79 actions, 9 running)
+[0m[91m[101 / 206] [Sched] Compiling org_tensorflow/tensorflow/lite/delegates/gpu/common/mediapipe/landmarks_to_transform_matrix.cc; 13s ... (73 actions, 8 running)
+[0m[91m[104 / 206] [Sched] Compiling mediapipe/calculators/tflite/tflite_custom_op_resolver_calculator.pb.cc [for host]; 16s ... (70 actions, 8 running)
+[0m[91m[107 / 206] [Sched] Compiling mediapipe/framework/formats/matrix_data.pb.cc [for host]; 18s ... (67 actions, 9 running)
+[0m[91m[114 / 206] [Sched] Compiling mediapipe/calculators/util/association_norm_rect_calculator.cc; 22s ... (61 actions, 9 running)
+[0m[91m[123 / 206] [Sched] Compiling mediapipe/calculators/util/rect_transformation_calculator.pb.cc [for host]; 26s ... (52 actions, 9 running)
+[0m[91m[130 / 206] [Sched] Compiling mediapipe/calculators/core/constant_side_packet_calculator.pb.cc [for host]; 30s ... (46 actions, 9 running)
+[0m[91m[138 / 206] [Sched] Compiling mediapipe/calculators/core/split_vector_calculator.pb.cc; 36s ... (40 actions, 8 running)
+[0m[91m[146 / 206] [Sched] Compiling mediapipe/util/color.pb.cc; 41s ... (32 actions, 9 running)
+[0m[91m[152 / 206] [Sched] Compiling mediapipe/calculators/util/landmarks_to_detection_calculator.cc; 49s ... (26 actions, 9 running)
+[0m[91m[162 / 206] [Sched] Compiling mediapipe/calculators/util/detections_to_rects_calculator.pb.cc; 52s ... (16 actions, 9 running)
+[0m[91m[192 / 206] Compiling mediapipe/calculators/tensor/tensors_to_floats_calculator.cc; 9s processwrapper-sandbox ... (9 actions running)
 [0m[91mTarget //mediapipe/modules/face_landmark:face_landmark_front_cpu up-to-date:
-  bazel-bin/mediapipe/modules/face_landmark/libface_landmark_front_cpu.lo
+[0m[91m  bazel-bin/mediapipe/modules/face_landmark/libface_landmark_front_cpu.lo
   bazel-bin/mediapipe/modules/face_landmark/libface_landmark_front_cpu.pic.lo
   bazel-bin/mediapipe/modules/face_landmark/libface_landmark_front_cpu.so
-[0m[91mINFO: Elapsed time: 73.892s, Critical Path: 72.72s
+[0m[91mINFO: Elapsed time: 74.016s, Critical Path: 73.34s
 [0m[91mINFO: 206 processes: 32 internal, 174 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 206 total actions
 [0m[91mINFO: Build completed successfully, 206 total actions
@@ -695,20 +448,20 @@ Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 WARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
-Warning: skipping import of repository 'com_google_absl' because it already exists.
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+Warning: skipping import of repository 'com_google_absl' because it already exists.
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_protobuf' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_googletest' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_apple_support' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'bazel_skylib' because it already exists.
@@ -729,29 +482,29 @@ Repository rule http_archive defined at:
 [0m[91mINFO: Analyzed target //mediapipe/modules/hand_landmark:hand_landmark_tracking_cpu (3 packages loaded, 155 targets configured).
 [0m[91mINFO: Found 1 target...
 [0m[91m[0 / 1] [Prepa] BazelWorkspaceStatusAction stable-status.txt
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_classification_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_classification_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/core/flow_limiter_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91m[37 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.pb.cc; 1s processwrapper-sandbox ... (16 actions, 8 running)
-[0m[91m[37 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.pb.cc; 3s processwrapper-sandbox ... (16 actions, 9 running)
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/core/flow_limiter_calculator.pb.h:
 [0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91m[42 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.cc; 4s processwrapper-sandbox ... (16 actions, 8 running)
-[0m[91m[42 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.cc; 5s processwrapper-sandbox ... (16 actions, 8 running)
-[0m[91m[42 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.cc; 7s processwrapper-sandbox ... (16 actions, 9 running)
-[0m[91m[43 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.cc; 8s processwrapper-sandbox ... (16 actions, 9 running)
-[0m[91m[59 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.cc; 10s processwrapper-sandbox ... (12 actions, 9 running)
-[0m[91m[68 / 80] Compiling mediapipe/calculators/core/flow_limiter_calculator.cc; 2s processwrapper-sandbox ... (9 actions, 8 running)
-[0m[91m[68 / 80] Compiling mediapipe/calculators/core/flow_limiter_calculator.cc; 7s processwrapper-sandbox ... (9 actions running)
-[0m[91m[77 / 80] Compiling mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu_linked.cc; 3s processwrapper-sandbox
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_classification_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91m[37 / 80] Compiling mediapipe/calculators/util/world_landmark_projection_calculator.cc; 1s processwrapper-sandbox ... (17 actions, 9 running)
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_classification_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91m[39 / 80] Compiling mediapipe/calculators/util/world_landmark_projection_calculator.cc; 2s processwrapper-sandbox ... (17 actions, 8 running)
+[0m[91m[41 / 80] Compiling mediapipe/calculators/util/world_landmark_projection_calculator.cc; 3s processwrapper-sandbox ... (15 actions, 8 running)
+[0m[91m[43 / 80] Compiling mediapipe/calculators/util/world_landmark_projection_calculator.cc; 4s processwrapper-sandbox ... (15 actions, 8 running)
+[0m[91m[43 / 80] Compiling mediapipe/calculators/util/world_landmark_projection_calculator.cc; 7s processwrapper-sandbox ... (15 actions, 9 running)
+[0m[91m[44 / 80] Compiling mediapipe/calculators/util/world_landmark_projection_calculator.cc; 8s processwrapper-sandbox ... (14 actions, 9 running)
+[0m[91m[58 / 80] Compiling mediapipe/calculators/util/filter_collection_calculator.cc; 10s processwrapper-sandbox ... (10 actions, 8 running)
+[0m[91m[60 / 80] Compiling mediapipe/calculators/core/flow_limiter_calculator.cc; 9s processwrapper-sandbox ... (8 actions running)
+[0m[91m[68 / 80] Compiling mediapipe/calculators/tensor/tensors_to_classification_calculator.cc; 8s processwrapper-sandbox ... (9 actions, 8 running)
+[0m[91m[74 / 80] Compiling mediapipe/modules/hand_landmark/hand_landmark_cpu_linked.cc; 5s processwrapper-sandbox ... (3 actions running)
 [0m[91mTarget //mediapipe/modules/hand_landmark:hand_landmark_tracking_cpu up-to-date:
-[0m[91m  bazel-bin/mediapipe/modules/hand_landmark/libhand_landmark_tracking_cpu.lo
-  bazel-bin/mediapipe/modules/hand_landmark/libhand_landmark_tracking_cpu.pic.lo
+  bazel-bin/mediapipe/modules/hand_landmark/libhand_landmark_tracking_cpu.lo
+[0m[91m  bazel-bin/mediapipe/modules/hand_landmark/libhand_landmark_tracking_cpu.pic.lo
   bazel-bin/mediapipe/modules/hand_landmark/libhand_landmark_tracking_cpu.so
-[0m[91mINFO: Elapsed time: 20.948s, Critical Path: 20.48s
+[0m[91mINFO: Elapsed time: 20.597s, Critical Path: 20.11s
 [0m[91mINFO: 80 processes: 32 internal, 48 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 80 total actions
 [0m[91mINFO: Build completed successfully, 80 total actions
@@ -762,100 +515,101 @@ Repository rule http_archive defined at:
   /usr/local/src/mediapipe/WORKSPACE:42:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 WARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_absl' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_protobuf' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_googletest' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_apple_support' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'bazel_skylib' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'pybind11' because it already exists.
 [0m[91mAnalyzing: target //mediapipe/modules/holistic_landmark:holistic_landmark_cpu (1 packages loaded, 0 targets configured)
 [0m[91mDEBUG: Rule 'rules_cc' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "3839996049629e6377abdfd04681ddeeb0cc3db13b9d2ff81bf46700cb4529f7"
-[0m[91mDEBUG: Rule 'opencv' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "1ed6f5b02a7baf14daca04817566e7c98ec668cec381e0edf534fa49f10f58a2"
-[0m[91mDEBUG: Repository opencv instantiated at:
-  /usr/local/src/mediapipe/WORKSPACE:181:13: in <toplevel>
-Repository rule http_archive defined at:
-  /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-[0m[91mWARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mDEBUG: Repository rules_cc instantiated at:
   /usr/local/src/mediapipe/WORKSPACE:36:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
+[0m[91mDEBUG: Rule 'opencv' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "1ed6f5b02a7baf14daca04817566e7c98ec668cec381e0edf534fa49f10f58a2"
+DEBUG: Repository opencv instantiated at:
+  /usr/local/src/mediapipe/WORKSPACE:181:13: in <toplevel>
+Repository rule http_archive defined at:
+  /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
+[0m[91mWARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mINFO: Analyzed target //mediapipe/modules/holistic_landmark:holistic_landmark_cpu (5 packages loaded, 567 targets configured).
 [0m[91mINFO: Found 1 target...
 [0m[91m[0 / 1] [Prepa] BazelWorkspaceStatusAction stable-status.txt
 [0m[91mINFO: From ProtoCompile mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/image_transformation_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/segmentation_smoothing_calculator.pb.h [for host]:
 [0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/refine_landmarks_from_heatmap_calculator.pb.h [for host]:
-bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/segmentation_smoothing_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/warp_affine_calculator.pb.h:
+[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/image/image_transformation_calculator.pb.h [for host]:
-bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/warp_affine_calculator.pb.h [for host]:
+[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_segmentation_calculator.pb.h [for host]:
 bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/visibility_copy_calculator.pb.h [for host]:
 [0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/segmentation_smoothing_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/warp_affine_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/segmentation_smoothing_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/visibility_smoothing_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/refine_landmarks_from_heatmap_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_smoothing_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/visibility_smoothing_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_segmentation_calculator.pb.h:
 bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-INFO: From ProtoCompile mediapipe/calculators/image/warp_affine_calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/visibility_smoothing_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/visibility_copy_calculator.pb.h:
 bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/refine_landmarks_from_heatmap_calculator.pb.h:
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/tensor/tensors_to_segmentation_calculator.pb.h:
 bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91m[121 / 261] Compiling mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.cc [for host]; 1s processwrapper-sandbox ... (50 actions, 8 running)
-[0m[91m[122 / 261] Compiling mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.cc [for host]; 2s processwrapper-sandbox ... (49 actions, 8 running)
-[0m[91m[124 / 261] [Sched] ProtoCompile mediapipe/calculators/util/landmarks_smoothing_calculator.pb.h [for host] ... (52 actions, 8 running)
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_smoothing_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91m[126 / 261] [Sched] Compiling mediapipe/calculators/core/packet_presence_calculator.cc; 5s ... (51 actions, 8 running)
-[0m[91m[128 / 261] [Sched] Linking mediapipe/modules/pose_landmark/pose_landmark_model_loader_graph_text_to_binary_graph [for host]; 7s ... (49 actions, 8 running)
-[0m[91mINFO: From ProtoCompile mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/calculators/image/image_transformation_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/landmarks_smoothing_calculator.pb.h:
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/calculators/util/refine_landmarks_from_heatmap_calculator.pb.h:
 [0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91m[142 / 261] [Sched] Compiling mediapipe/calculators/image/warp_affine_calculator.pb.cc [for host]; 8s ... (47 actions, 9 running)
-[0m[91m[144 / 261] [Sched] Compiling mediapipe/calculators/image/segmentation_smoothing_calculator.cc; 10s ... (46 actions, 9 running)
-[0m[91m[150 / 261] [Sched] Compiling mediapipe/calculators/tensor/tensors_to_segmentation_calculator.cc; 12s ... (44 actions, 9 running)
-[0m[91m[156 / 261] [Sched] Compiling mediapipe/calculators/util/refine_landmarks_from_heatmap_calculator.cc; 15s ... (38 actions, 8 running)
-[0m[91m[170 / 261] [Sched] Compiling mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.cc; 9s ... (35 actions, 8 running)
-[0m[91m[173 / 261] [Sched] Executing genrule //mediapipe/modules/pose_landmark:pose_landmark_model_loader_graph; 12s ... (35 actions, 9 running)
-[0m[91m[183 / 261] [Sched] Linking mediapipe/modules/pose_landmark/pose_landmarks_and_segmentation_inverse_projection_graph_text_to_binary_graph [for host]; 12s ... (31 actions, 9 running)
-[0m[91m[214 / 261] Compiling mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.cc; 9s processwrapper-sandbox ... (27 actions, 9 running)
-[0m[91m[227 / 261] Compiling mediapipe/calculators/util/landmarks_smoothing_calculator.cc; 11s processwrapper-sandbox ... (20 actions, 8 running)
-[0m[91m[241 / 261] Compiling mediapipe/modules/holistic_landmark/hand_landmarks_to_roi_linked.cc; 6s processwrapper-sandbox ... (13 actions, 9 running)
-[0m[91m[248 / 261] Compiling mediapipe/modules/holistic_landmark/hand_landmarks_left_and_right_cpu_linked.cc; 7s processwrapper-sandbox ... (10 actions, 9 running)
+[0m[91m[128 / 261] Compiling mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.cc [for host]; 0s processwrapper-sandbox ... (53 actions, 9 running)
+[0m[91m[132 / 261] Compiling mediapipe/modules/holistic_landmark/calculators/roi_tracking_calculator.pb.cc [for host]; 2s processwrapper-sandbox ... (53 actions, 8 running)
+[0m[91m[135 / 261] [Sched] Compiling mediapipe/calculators/core/merge_calculator.cc ... (55 actions, 9 running)
+[0m[91m[137 / 261] [Sched] Compiling mediapipe/calculators/image/segmentation_smoothing_calculator.pb.cc; 4s ... (53 actions, 9 running)
+[0m[91m[138 / 261] [Sched] Compiling mediapipe/calculators/image/segmentation_smoothing_calculator.pb.cc; 6s ... (52 actions, 8 running)
+[0m[91m[139 / 261] [Sched] Compiling mediapipe/calculators/image/segmentation_smoothing_calculator.cc; 7s ... (52 actions, 8 running)
+[0m[91m[141 / 261] [Sched] Compiling mediapipe/calculators/image/warp_affine_calculator.pb.cc; 8s ... (50 actions, 9 running)
+[0m[91m[143 / 261] [Sched] Compiling mediapipe/calculators/image/image_transformation_calculator.pb.cc; 10s ... (48 actions, 9 running)
+[0m[91m[148 / 261] [Sched] Compiling mediapipe/calculators/image/warp_affine_calculator.pb.cc [for host]; 12s ... (43 actions, 9 running)
+[0m[91m[156 / 261] [Sched] Compiling mediapipe/calculators/util/refine_landmarks_from_heatmap_calculator.pb.cc [for host]; 14s ... (39 actions, 8 running)
+[0m[91m[162 / 261] [Sched] Compiling mediapipe/calculators/util/visibility_copy_calculator.pb.cc; 17s ... (36 actions, 9 running)
+[0m[91m[168 / 261] [Sched] Executing genrule //mediapipe/modules/holistic_landmark:face_landmarks_from_pose_to_recrop_roi_graph; 19s ... (35 actions, 9 running)
+[0m[91m[183 / 261] [Sched] Executing genrule //mediapipe/modules/holistic_landmark:hand_visibility_from_hand_landmarks_from_pose_inc; 9s ... (30 actions, 9 running)
+[0m[91m[210 / 261] Compiling mediapipe/calculators/util/visibility_copy_calculator.cc; 9s processwrapper-sandbox ... (28 actions, 9 running)
+[0m[91m[222 / 261] Compiling mediapipe/calculators/util/landmarks_smoothing_calculator.cc; 12s processwrapper-sandbox ... (22 actions, 9 running)
+[0m[91m[239 / 261] Compiling mediapipe/modules/holistic_landmark/face_landmarks_from_pose_to_recrop_roi_linked.cc; 6s processwrapper-sandbox ... (19 actions, 9 running)
+[0m[91m[247 / 261] [Sched] Compiling mediapipe/modules/holistic_landmark/holistic_landmark_cpu_linked.cc; 9s ... (11 actions, 8 running)
 [0m[91mTarget //mediapipe/modules/holistic_landmark:holistic_landmark_cpu up-to-date:
 [0m[91m  bazel-bin/mediapipe/modules/holistic_landmark/libholistic_landmark_cpu.lo
   bazel-bin/mediapipe/modules/holistic_landmark/libholistic_landmark_cpu.pic.lo
   bazel-bin/mediapipe/modules/holistic_landmark/libholistic_landmark_cpu.so
-[0m[91mINFO: Elapsed time: 51.711s, Critical Path: 51.23s
-INFO: 261 processes: 100 internal, 161 processwrapper-sandbox.
+[0m[91mINFO: Elapsed time: 52.019s, Critical Path: 51.45s
+[0m[91mINFO: 261 processes: 100 internal, 161 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 261 total actions
 [0m[91mINFO: Build completed successfully, 261 total actions
 [0m[91mLoading: 
@@ -867,7 +621,7 @@ Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 WARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_absl' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
@@ -902,39 +656,39 @@ WARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/gith
 [0m[91mINFO: Found 1 target...
 [0m[91m[0 / 1] [Prepa] BazelWorkspaceStatusAction stable-status.txt
 [0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/frame_annotation_to_rect_calculator.pb.h:
-[0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator.pb.h:
+bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
+[0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/frame_annotation_to_rect_calculator.pb.h [for host]:
+bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/detection_label_id_to_text_calculator.pb.h [for host]:
 [0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/calculators/util/detection_label_id_to_text_calculator.pb.h:
 [0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
-INFO: From ProtoCompile mediapipe/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator.pb.h [for host]:
-[0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/frame_annotation_to_rect_calculator.pb.h [for host]:
+[0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator.pb.h [for host]:
 bazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator.pb.h:
-bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/filter_detection_calculator.pb.h:
 [0m[91mbazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does not exist.
 [0m[91mINFO: From ProtoCompile mediapipe/modules/objectron/calculators/filter_detection_calculator.pb.h [for host]:
 [0m[91mbazel-out/host/bin/external/com_google_protobuf/src: warning: directory does not exist.
-[0m[91m[33 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/frame_annotation_to_rect_calculator.pb.cc [for host] ... (27 actions, 8 running)
+[0m[91m[33 / 74] Compiling mediapipe/modules/objectron/calculators/frame_annotation_to_rect_calculator.pb.cc; 1s processwrapper-sandbox ... (27 actions, 8 running)
 [0m[91m[37 / 74] Compiling mediapipe/modules/objectron/calculators/tensor_util.cc; 2s processwrapper-sandbox ... (23 actions, 8 running)
-[0m[91m[40 / 74] Compiling mediapipe/calculators/util/detection_label_id_to_text_calculator.cc; 4s processwrapper-sandbox ... (20 actions, 9 running)
-[0m[91m[43 / 74] Compiling mediapipe/calculators/util/detection_label_id_to_text_calculator.cc; 5s processwrapper-sandbox ... (18 actions, 8 running)
-[0m[91m[44 / 74] Compiling mediapipe/calculators/util/detection_label_id_to_text_calculator.cc; 6s processwrapper-sandbox ... (17 actions, 8 running)
-[0m[91m[45 / 74] Compiling mediapipe/calculators/util/detection_label_id_to_text_calculator.cc; 8s processwrapper-sandbox ... (16 actions, 9 running)
-[0m[91m[47 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/landmarks_to_frame_annotation_calculator.cc; 10s ... (14 actions, 8 running)
-[0m[91m[49 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/annotation_data.pb.cc [for host]; 12s ... (12 actions, 9 running)
-[0m[91m[50 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/annotation_data.pb.cc [for host]; 15s ... (11 actions, 8 running)
-[0m[91m[50 / 74] [Sched] Executing genrule //mediapipe/modules/objectron:box_landmark_cpu_graph; 18s ... (11 actions, 9 running)
-[0m[91m[63 / 74] Compiling mediapipe/modules/objectron/calculators/box.cc; 17s processwrapper-sandbox ... (4 actions, 3 running)
-[0m[91m[69 / 74] Compiling mediapipe/modules/objectron/objectron_cpu_linked.cc; 3s processwrapper-sandbox ... (2 actions running)
+[0m[91m[40 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/box.cc ... (20 actions, 8 running)
+[0m[91m[40 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/frame_annotation_to_rect_calculator.cc; 4s ... (20 actions, 9 running)
+[0m[91m[43 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/model.cc; 6s ... (17 actions, 9 running)
+[0m[91m[45 / 74] [Sched] Compiling mediapipe/modules/objectron/calculators/lift_2d_frame_annotation_to_3d_calculator.cc; 7s ... (15 actions, 8 running)
+[0m[91m[45 / 74] Compiling mediapipe/modules/objectron/calculators/epnp.cc; 11s processwrapper-sandbox ... (15 actions, 9 running)
+[0m[91m[48 / 74] Compiling mediapipe/modules/objectron/calculators/epnp.cc; 13s processwrapper-sandbox ... (12 actions, 8 running)
+[0m[91m[50 / 74] Compiling mediapipe/modules/objectron/calculators/epnp.cc; 15s processwrapper-sandbox ... (10 actions, 9 running)
+[0m[91m[58 / 74] Compiling mediapipe/modules/objectron/calculators/box.cc; 13s processwrapper-sandbox ... (6 actions, 5 running)
+[0m[91m[65 / 74] Compiling mediapipe/modules/objectron/calculators/box.cc; 17s processwrapper-sandbox ... (6 actions running)
+[0m[91m[71 / 74] Compiling mediapipe/modules/objectron/calculators/filter_detection_calculator.cc; 11s processwrapper-sandbox ... (2 actions, 1 running)
 [0m[91mTarget //mediapipe/modules/objectron:objectron_cpu up-to-date:
 [0m[91m  bazel-bin/mediapipe/modules/objectron/libobjectron_cpu.lo
   bazel-bin/mediapipe/modules/objectron/libobjectron_cpu.pic.lo
-  bazel-bin/mediapipe/modules/objectron/libobjectron_cpu.so
-[0m[91mINFO: Elapsed time: 27.243s, Critical Path: 26.88s
-[0m[91mINFO: 74 processes: 16 internal, 58 processwrapper-sandbox.
+[0m[91m  bazel-bin/mediapipe/modules/objectron/libobjectron_cpu.so
+[0m[91mINFO: Elapsed time: 28.113s, Critical Path: 27.71s
+INFO: 74 processes: 16 internal, 58 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 74 total actions
 [0m[91mINFO: Build completed successfully, 74 total actions
 [0m[91mLoading: 
@@ -944,20 +698,20 @@ bazel-out/k8-opt/bin/external/com_google_protobuf/src: warning: directory does n
   /usr/local/src/mediapipe/WORKSPACE:42:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-WARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_absl' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_protobuf' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_googletest' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
 [0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_apple_support' because it already exists.
@@ -972,11 +726,11 @@ DEBUG: Repository rules_cc instantiated at:
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 [0m[91mDEBUG: Rule 'opencv' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "1ed6f5b02a7baf14daca04817566e7c98ec668cec381e0edf534fa49f10f58a2"
-[0m[91mDEBUG: Repository opencv instantiated at:
+DEBUG: Repository opencv instantiated at:
   /usr/local/src/mediapipe/WORKSPACE:181:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
-WARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+[0m[91mWARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mINFO: Analyzed target //mediapipe/modules/pose_landmark:pose_landmark_cpu (0 packages loaded, 0 targets configured).
 [0m[91mINFO: Found 1 target...
 [0m[91m[0 / 1] [Prepa] BazelWorkspaceStatusAction stable-status.txt
@@ -986,9 +740,9 @@ WARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/gith
 [0m[91m  bazel-bin/mediapipe/modules/pose_landmark/libpose_landmark_cpu.lo
   bazel-bin/mediapipe/modules/pose_landmark/libpose_landmark_cpu.pic.lo
   bazel-bin/mediapipe/modules/pose_landmark/libpose_landmark_cpu.so
-[0m[91mINFO: Elapsed time: 4.149s, Critical Path: 3.90s
+[0m[91mINFO: Elapsed time: 4.267s, Critical Path: 3.98s
 INFO: 8 processes: 4 internal, 4 processwrapper-sandbox.
-[0m[91mINFO: Build completed successfully, 8 total actions
+INFO: Build completed successfully, 8 total actions
 [0m[91mINFO: Build completed successfully, 8 total actions
 [0m[91mLoading: 
 [0m[91mLoading: 0 packages loaded
@@ -999,24 +753,24 @@ Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 WARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_absl' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_protobuf' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_googletest' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_apple_support' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'bazel_skylib' because it already exists.
-DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'pybind11' because it already exists.
 [0m[91mAnalyzing: target //mediapipe/modules/selfie_segmentation:selfie_segmentation_cpu (1 packages loaded, 0 targets configured)
 [0m[91mDEBUG: Rule 'rules_cc' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "3839996049629e6377abdfd04681ddeeb0cc3db13b9d2ff81bf46700cb4529f7"
@@ -1025,22 +779,22 @@ Warning: skipping import of repository 'pybind11' because it already exists.
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 [0m[91mDEBUG: Rule 'opencv' indicated that a canonical reproducible form can be obtained by modifying arguments sha256 = "1ed6f5b02a7baf14daca04817566e7c98ec668cec381e0edf534fa49f10f58a2"
-[0m[91mDEBUG: Repository opencv instantiated at:
+DEBUG: Repository opencv instantiated at:
   /usr/local/src/mediapipe/WORKSPACE:181:13: in <toplevel>
 Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 [0m[91mWARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mINFO: Analyzed target //mediapipe/modules/selfie_segmentation:selfie_segmentation_cpu (1 packages loaded, 27 targets configured).
-[0m[91mINFO: Found 1 target...
+INFO: Found 1 target...
 [0m[91m[0 / 1] [Prepa] BazelWorkspaceStatusAction stable-status.txt
 [0m[91m[18 / 24] Compiling mediapipe/modules/selfie_segmentation/selfie_segmentation_model_loader_linked.cc; 1s processwrapper-sandbox ... (3 actions running)
-[0m[91m[21 / 24] [Prepa] Linking mediapipe/modules/selfie_segmentation/libselfie_segmentation_cpu.pic.lo
+[0m[91m[20 / 24] Compiling mediapipe/modules/selfie_segmentation/selfie_segmentation_cpu_linked.cc; 4s processwrapper-sandbox ... (2 actions, 1 running)
 [0m[91mTarget //mediapipe/modules/selfie_segmentation:selfie_segmentation_cpu up-to-date:
-[0m[91m  bazel-bin/mediapipe/modules/selfie_segmentation/libselfie_segmentation_cpu.lo
-  bazel-bin/mediapipe/modules/selfie_segmentation/libselfie_segmentation_cpu.pic.lo
-  bazel-bin/mediapipe/modules/selfie_segmentation/libselfie_segmentation_cpu.so
-[0m[91mINFO: Elapsed time: 4.752s, Critical Path: 4.44s
-INFO: 24 processes: 12 internal, 12 processwrapper-sandbox.
+  bazel-bin/mediapipe/modules/selfie_segmentation/libselfie_segmentation_cpu.lo
+[0m[91m  bazel-bin/mediapipe/modules/selfie_segmentation/libselfie_segmentation_cpu.pic.lo
+[0m[91m  bazel-bin/mediapipe/modules/selfie_segmentation/libselfie_segmentation_cpu.so
+[0m[91mINFO: Elapsed time: 4.737s, Critical Path: 4.43s
+[0m[91mINFO: 24 processes: 12 internal, 12 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 24 total actions
 [0m[91mINFO: Build completed successfully, 24 total actions
 [0mrunning build_ext
@@ -1054,16 +808,16 @@ Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 [0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/toolchains/archive/d781e89e2ee797ea7afd0c8391e761616fc5d50d.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/bazelbuild/rules_closure/archive/cf1e44edb908e9616030cc83d085989b8e6cd6df.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-WARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
-Warning: skipping import of repository 'com_google_absl' because it already exists.
+[0m[91mWARNING: Download from http://mirror.tensorflow.org/github.com/tensorflow/runtime/archive/0a8c6996bd6a58eb0e7e2fe049ac67bf663e1950.tar.gz failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+Warning: skipping import of repository 'com_google_absl' because it already exists.
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_protobuf' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'com_google_googletest' because it already exists.
-[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
-Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
+Warning: skipping import of repository 'com_github_gflags_gflags' because it already exists.
+[0m[91mDEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_apple' because it already exists.
 DEBUG: /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/org_tensorflow/third_party/repo.bzl:109:14: 
 Warning: skipping import of repository 'build_bazel_rules_swift' because it already exists.
@@ -1087,26 +841,25 @@ Repository rule http_archive defined at:
   /root/.cache/bazel/_bazel_root/dcc55e3eb2ef4c80ac4b81dec4ac8dda/external/bazel_tools/tools/build_defs/repo/http.bzl:336:31: in <toplevel>
 [0m[91mWARNING: Download from https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/XNNPACK/archive/28407b24f04694a1353ffca91248e89bc250eb5b.zip failed: class com.google.devtools.build.lib.bazel.repository.downloader.UnrecoverableHttpException GET returned 404 Not Found
 [0m[91mINFO: Analyzed target //mediapipe/python:_framework_bindings.so (4 packages loaded, 95 targets configured).
-INFO: Found 1 target...
+[0m[91mINFO: Found 1 target...
 [0m[91m[0 / 3] [Prepa] BazelWorkspaceStatusAction stable-status.txt
 [0m[91m[10 / 32] Compiling mediapipe/calculators/core/side_packet_to_stream_calculator.cc; 1s processwrapper-sandbox ... (21 actions, 8 running)
 [0m[91m[10 / 32] Compiling mediapipe/calculators/core/side_packet_to_stream_calculator.cc; 3s processwrapper-sandbox ... (21 actions, 9 running)
-[0m[91m[16 / 32] Compiling mediapipe/calculators/core/side_packet_to_stream_calculator.cc; 4s processwrapper-sandbox ... (15 actions, 8 running)
-[0m[91m[16 / 32] Compiling mediapipe/calculators/core/side_packet_to_stream_calculator.cc; 7s processwrapper-sandbox ... (15 actions, 9 running)
-[0m[91m[18 / 32] [Sched] Compiling mediapipe/python/pybind/packet_getter.cc; 8s ... (13 actions, 8 running)
-[0m[91m[18 / 32] [Sched] Compiling mediapipe/python/pybind/image_frame.cc; 11s ... (13 actions, 9 running)
-[0m[91m[21 / 32] [Sched] Compiling mediapipe/python/framework_bindings.cc; 13s ... (10 actions, 8 running)
-[0m[91m[24 / 32] Compiling mediapipe/python/pybind/packet.cc; 11s processwrapper-sandbox ... (7 actions running)
-[0m[91m[28 / 32] Compiling mediapipe/python/pybind/image_frame.cc; 12s processwrapper-sandbox ... (3 actions running)
-[0m[91m[31 / 32] [Prepa] Linking mediapipe/python/_framework_bindings.so
+[0m[91m[14 / 32] Compiling mediapipe/calculators/core/side_packet_to_stream_calculator.cc; 4s processwrapper-sandbox ... (17 actions, 8 running)
+[0m[91m[14 / 32] Compiling mediapipe/calculators/core/side_packet_to_stream_calculator.cc; 6s processwrapper-sandbox ... (17 actions, 9 running)
+[0m[91m[18 / 32] Compiling mediapipe/calculators/core/string_to_int_calculator.cc; 8s processwrapper-sandbox ... (13 actions, 9 running)
+[0m[91m[20 / 32] [Sched] Compiling mediapipe/python/pybind/image_frame.cc; 10s ... (11 actions, 8 running)
+[0m[91m[21 / 32] [Sched] Compiling mediapipe/python/pybind/packet_creator.cc; 13s ... (10 actions, 8 running)
+[0m[91m[21 / 32] [Sched] Compiling mediapipe/python/framework_bindings.cc; 17s ... (10 actions, 9 running)
+[0m[91m[26 / 32] Compiling mediapipe/python/pybind/image.cc; 12s processwrapper-sandbox ... (5 actions running)
+[0m[91m[30 / 32] Compiling mediapipe/python/pybind/packet_creator.cc; 10s processwrapper-sandbox
 [0m[91mTarget //mediapipe/python:_framework_bindings.so up-to-date:
-[0m[91m  bazel-bin/mediapipe/python/_framework_bindings.so
-[0m[91mINFO: Elapsed time: 33.683s, Critical Path: 32.26s
+  bazel-bin/mediapipe/python/_framework_bindings.so
+[0m[91mINFO: Elapsed time: 34.172s, Critical Path: 32.81s
 INFO: 32 processes: 9 internal, 23 processwrapper-sandbox.
 [0m[91mINFO: Build completed successfully, 32 total actions
 [0m[91mINFO: Build completed successfully, 32 total actions
 [0mrunning modify_inits
-running build
 running build_py
 copying mediapipe/__init__.py -> build/lib.linux-x86_64-3.8/mediapipe
 creating build/lib.linux-x86_64-3.8/mediapipe/util
@@ -2288,9 +2041,7 @@ creating build/lib.linux-x86_64-3.8/mediapipe/examples/android/solutions/facedet
 creating build/lib.linux-x86_64-3.8/mediapipe/examples/android/solutions/facedetection/src/main
 copying mediapipe/examples/android/solutions/facedetection/src/main/AndroidManifest.xml -> build/lib.linux-x86_64-3.8/mediapipe/examples/android/solutions/facedetection/src/main
 copying mediapipe/examples/android/solutions/facedetection/src/main/BUILD -> build/lib.linux-x86_64-3.8/mediapipe/examples/android/solutions/facedetection/src/main
-[91m/usr/local/src/mediapipe/mp_env/lib/python3.8/site-packages/setuptools/command/install.py:34: SetuptoolsDeprecationWarning: setup.py install is deprecated. Use build and pip and other standards-based tools.
-  warnings.warn(
-generating binarypb: mediapipe/modules/face_detection/face_detection_short_range_cpu
+[91mgenerating binarypb: mediapipe/modules/face_detection/face_detection_short_range_cpu
 generating binarypb: mediapipe/modules/face_detection/face_detection_full_range_cpu
 generating binarypb: mediapipe/modules/face_landmark/face_landmark_front_cpu
 generating binarypb: mediapipe/modules/hand_landmark/hand_landmark_tracking_cpu

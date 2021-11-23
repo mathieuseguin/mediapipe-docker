@@ -30,6 +30,13 @@ RUN git clone https://github.com/google/mediapipe.git
 
 WORKDIR /usr/local/src/mediapipe
 
+RUN apt install -y \
+        libopencv-core-dev \
+        libopencv-highgui-dev \
+        libopencv-calib3d-dev \
+        libopencv-features2d-dev \
+        libopencv-imgproc-dev libopencv-video-dev
+
 COPY ./setup_opencv.patch /tmp/setup_opencv.patch
 
 RUN patch setup_opencv.sh /tmp/setup_opencv.patch
